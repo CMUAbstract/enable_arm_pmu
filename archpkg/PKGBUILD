@@ -1,0 +1,25 @@
+# Maintainer: Alexei Colin <ac@alexeicolin.com>
+
+pkgname=arm-perfcnt-module-dkms
+_pkgname=arm-perfcnt-module
+pkgver=0
+pkgrel=1
+pkgdesc="Kernel module for enabling access to performance counter registers on ARM (dkms)"
+arch=('armv7h' 'aarch64')
+url="http://github.com/thoughtpolice/enable_arm_pmu"
+license=('custom')
+depends=('dkms')
+provides=("${_pkgname}=$pkgver")
+conflicts=("${_pkgname}")
+source=(dkms.conf)
+sha256sums=('b0fb81383e5250a3448e5472c27eae97e38d6e74f330d86885b34540b180b454')
+
+prepare() {
+    ln -snf "$startdir/.." "$srcdir/$pkgname"
+}
+
+package() {
+  install -dm755 ${pkgdir}/usr/src/${_pkgname}-${pkgver}
+  cp -r ${srcdir}/${pkgname}/{ko,*.h,*.c,*.md,*.txt,Makefile} ${pkgdir}/usr/src/${_pkgname}-${pkgver}/
+  sed "s/__VERSION__/$pkgver/" ${srcdir}/dkms.conf > ${pkgdir}/usr/src/${_pkgname}-${pkgver}/dkms.conf
+}
