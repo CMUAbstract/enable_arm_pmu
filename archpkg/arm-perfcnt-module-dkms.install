@@ -1,0 +1,7 @@
+post_upgrade() {
+    systemctl restart systemd-modules-load
+}
+
+post_install() {
+    post_upgrade
+}

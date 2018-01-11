@@ -11,6 +11,7 @@ license=('custom')
 depends=('dkms')
 provides=("${_pkgname}=$pkgver")
 conflicts=("${_pkgname}")
+install=$pkgname.install
 source=(dkms.conf)
 sha256sums=('b0fb81383e5250a3448e5472c27eae97e38d6e74f330d86885b34540b180b454')
 
